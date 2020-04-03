@@ -5,6 +5,7 @@
 #include <string>
 #include <iostream>
 #include "WorldMap.h"
+#include "PlayerObject.h"
 
 
 class Level{
@@ -25,5 +26,11 @@ private:
 	sf::RenderWindow* window;
 	Input* input;
 
+	// View Variable
+	sf::View view;
+
+	// GameObjects
+	PlayerObject player;
+	sf::Texture playerTexture;
 	WorldMap worldMap;
 };
