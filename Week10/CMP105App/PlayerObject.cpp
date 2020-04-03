@@ -1,4 +1,5 @@
 #include "PlayerObject.h"
+#include <iostream>
 
 PlayerObject::PlayerObject()
 {
@@ -138,7 +139,45 @@ void PlayerObject::update(float dt)
 
 void PlayerObject::collisionResponse(GameObject* collider)
 {
-	isJumping = false;
-	velocity.y = 0;
-	setPosition(getPosition().x, collider->getPosition().y - getSize().y);
+	//sf::FloatRect colliderCollisionBox = collider->getCollisionBox();
+	float xDiff = getPosition().x - collider->getPosition().x;
+	float yDiff = getPosition().y - collider->getPosition().y;
+
+	if (abs(xDiff) - (0.5f * (getSize().x + collider->getSize().x)) > abs(yDiff) - (0.5f * (getSize().y + collider->getSize().y)))
+	{
+		std::cout << "Side on collision" << std::endl;
+		//x-axis collision
+		if (xDiff < 0)
+		{
+			//collision from left
+			setPosition(collider->getPosition().x - getSize().x - 0.1, getPosition().y);
+		}
+		else
+		{
+			//collision from right
+			setPosition(collider->getPosition().x + collider->getSize().x + 0.1, getPosition().y);
+		}
+
+	}
+	else
+	{
+		std::cout << "Top/down collision" << std::endl;
+		//y-axis collision
+		if (yDiff < 0)
+		{
+			//collision from above
+			if (velocity.y > 0)
+			{
+				isJumping = false;
+				velocity.y = 0;
+				setPosition(getPosition().x, collider->getPosition().y - getSize().y);
+			}
+		}
+		else
+		{
+			//collision from below
+			velocity.y = -(velocity.y / 3);
+			setPosition(getPosition().x, collider->getPosition().y + collider->getSize().y);
+		}
+	}
 }
