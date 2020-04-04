@@ -1,5 +1,4 @@
 #include "PlayerObject.h"
-#include <iostream>
 
 PlayerObject::PlayerObject()
 {
@@ -145,7 +144,6 @@ void PlayerObject::collisionResponse(GameObject* collider)
 
 	if (abs(xDiff) - (0.5f * (getSize().x + collider->getSize().x)) > abs(yDiff) - (0.5f * (getSize().y + collider->getSize().y)))
 	{
-		std::cout << "Side on collision" << std::endl;
 		//x-axis collision
 		if (xDiff < 0)
 		{
@@ -161,7 +159,6 @@ void PlayerObject::collisionResponse(GameObject* collider)
 	}
 	else
 	{
-		std::cout << "Top/down collision" << std::endl;
 		//y-axis collision
 		if (yDiff < 0)
 		{
